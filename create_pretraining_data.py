@@ -22,6 +22,7 @@ import collections
 import random
 import tokenization
 import tensorflow as tf
+from tqdm import tqdm
 
 flags = tf.flags
 
@@ -210,6 +211,7 @@ def create_training_instances(input_files, tokenizer, max_seq_length,
   vocab_words = list(tokenizer.vocab.keys())
   instances = []
   for _ in range(dupe_factor):
+    print('dupe num : ' + str(_) )
     for document_index in range(len(all_documents)):
       instances.extend(
           create_instances_from_document(
@@ -331,6 +333,8 @@ def create_instances_from_document(
       current_chunk = []
       current_length = 0
     i += 1
+    if(i%10000 == 0):
+      print('create_instances_from_document ' + str(i))
 
   return instances
 
